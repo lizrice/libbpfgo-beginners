@@ -12,7 +12,7 @@ sudo apt-get update
 sudo apt-get install linux-headers-$(uname -r) make llvm clang libelf-dev pkg-config
 ```
 
-pkg-config is needs to build the libbpf headers
+pkg-config is needed to build the libbpf headers
 
 ## Dependencies
 
