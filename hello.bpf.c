@@ -11,7 +11,7 @@
 #endif
 
 #include <linux/bpf.h>
-#include <bpf_helpers.h>
+#include <bpf/bpf_helpers.h>
 
 char LICENSE[] SEC("license") = "Dual BSD/GPL";
 

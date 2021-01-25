@@ -5,19 +5,16 @@ WORK IN PROGRESS!
 
 eBPF hello world examples using libbpfgo
 
+## Install Go 
+
+See [the Go documentation](https://golang.org/doc/install)
+
 ## Install packages
 
 ```sh
 sudo apt-get update
-sudo apt-get install linux-headers-$(uname -r) make llvm clang libelf-dev pkg-config
+sudo apt-get install libbpf-dev make clang llvm libelf-dev
 ```
-
-pkg-config is needed to build the libbpf headers
-
-## Dependencies
-
-libbpfgo is included as a git submodule
-We also need stdarg.h, for now I have copied the version from tracee/3rdparty/include
 
 ## Building and running hello
 
@@ -30,5 +27,10 @@ This builds two things:
 * dist/hello.bpf.o - an object file for the eBPF program
 * hello - a Go executable
 
-The executable reads in the object file at runtime
+The executable reads in the object file at runtime.
 
+## Notes 
+
+I'm using Ubuntu 20.10, kernel 5.8, go 1.15
+
+This approach installs the libbpf-dev package. Another alternative (which is what [Tracee](https://github.com/aquasecurity/tracee) does) is to install the libbpf source as a git submodule, and build it from source. 

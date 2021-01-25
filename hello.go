@@ -20,7 +20,7 @@ func doEbpf() error {
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, os.Interrupt)
 
-	bpfModule, err := bpf.NewModuleFromFile("dist/hello.bpf.o")
+	bpfModule, err := bpf.NewModuleFromFile("hello.bpf.o")
 	must(err)
 	defer bpfModule.Close()
 
