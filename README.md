@@ -1,5 +1,5 @@
 # libbpfgo-beginners
-Basic eBPF examples in Golang using libbpfgo, based on the [original Python examples](https://github.com/lizrice/ebpf-beginners) from my [Beginner's Guide to eBPF talk](https://speakerdeck.com/lizrice/liz-rice-beginners-guide-to-ebpf)  
+Basic eBPF examples in Golang using [libbpfgo](https://github.com/aquasecurity/tracee/tree/main/libbpfgo), based on the [original Python examples](https://github.com/lizrice/ebpf-beginners) from my [Beginner's Guide to eBPF talk](https://speakerdeck.com/lizrice/liz-rice-beginners-guide-to-ebpf)  
 
 WORK IN PROGRESS! 
 
