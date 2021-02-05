@@ -2,21 +2,16 @@ package main
 
 import (
 	"C"
-	"fmt"
 
 	bpf "github.com/aquasecurity/tracee/libbpfgo"
 )
 import (
-	"bufio"
+	"fmt"
 	"os"
 	"os/signal"
 )
 
 func main() {
-	doEbpf()
-}
-
-func doEbpf() error {
 	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, os.Interrupt)
 
@@ -24,39 +19,52 @@ func doEbpf() error {
 	must(err)
 	defer bpfModule.Close()
 
-	bpfModule.BPFLoadObject()
+	err = bpfModule.BPFLoadObject()
+	must(err)
 
 	prog, err := bpfModule.GetProgram("hello")
 	must(err)
-
 	_, err = prog.AttachKprobe("__x64_sys_execve")
 	must(err)
 
-	go tracePrint()
+	go bpf.TracePrint()
 
-	// Wait until interrupted
+	prog, err = bpfModule.GetProgram("hello_bpftrace")
+	must(err)
+	_, err = prog.AttachRawTracepoint("sys_enter")
+	must(err)
+
+	eventsChannel := make(chan []byte, 1024)
+	p, err := bpfModule.InitPerfBuf("events", eventsChannel, nil, 1024)
+	must(err)
+
+	p.Start()
+
+	counter := make(map[string]int, 350)
+
+	go func() {
+		for {
+			select {
+			case event := <-eventsChannel:
+				// val := binary.LittleEndian.Uint64(event)
+				// fmt.Printf("Event %s\n", string(event))
+				comm := string(event)
+				if _, ok := counter[comm]; ok {
+					counter[comm]++
+				} else {
+					counter[comm] = 1
+				}
+			}
+		}
+	}()
+
 	<-sig
-	fmt.Println("Cleaning up")
-
-	return err
+	p.Stop()
+	fmt.Printf("%v\n", counter)
 }
 
 func must(err error) {
 	if err != nil {
 		panic(err)
-	}
-}
-
-// TODO: something like this could live in libbpfgo
-func tracePrint() {
-	f, err := os.Open("/sys/kernel/debug/tracing/trace_pipe")
-	must(err)
-	r := bufio.NewReader(f)
-	b := make([]byte, 1000)
-	for {
-		len, err := r.Read(b)
-		must(err)
-		s := string(b[:len])
-		fmt.Println(s)
 	}
 }

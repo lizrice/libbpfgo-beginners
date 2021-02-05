@@ -1,8 +1,8 @@
 TARGET := hello
 TARGET_BPF := $(TARGET).bpf.o
 
-GO_SRC := $(shell find . -type f -name '*.go')
-BPF_SRC := $(shell find . -type f -name '*.bpf.c')
+GO_SRC := *.go
+BPF_SRC := *.bpf.c
 
 LIBBPF_HEADERS := /usr/include/bpf
 LIBBPF_OBJ := /usr/lib/x86_64-linux-gnu/libbpf.a
@@ -23,5 +23,4 @@ $(TARGET_BPF): $(BPF_SRC)
 .PHONY: clean
 clean:
 	go clean
-	-rm $(TARGET_BPF)
 	

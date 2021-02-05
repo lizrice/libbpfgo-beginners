@@ -1,22 +1,22 @@
 // +build ignore
+#include "hello.bpf.h"
 
-/* In Linux 5.4 asm_inline was introduced, but it's not supported by clang.
- * Redefine it to just asm to enable successful compilation.
- * see https://github.com/iovisor/bcc/commit/2d1497cde1cc9835f759a707b42dea83bee378b8 for more details
- */
-#include <linux/types.h>
-#ifdef asm_inline
-#undef asm_inline
-#define asm_inline asm
-#endif
-
-#include <linux/bpf.h>
-#include <bpf/bpf_helpers.h>
-
-char LICENSE[] SEC("license") = "Dual BSD/GPL";
-
+// Example: tracing a message on a kprobe
 SEC("kprobe/sys_execve")
-int hello(void *ctx) {
+int hello(void *ctx)
+{
     bpf_printk("I'm alive!");
+    return 0;
+}
+
+// Example of passing data using a perf map
+// Similar to bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count();}'
+BPF_PERF_OUTPUT(events)
+SEC("raw_tracepoint/sys_enter")
+int hello_bpftrace(void *ctx)
+{
+    char data[100];
+    bpf_get_current_comm(&data, 100);
+    bpf_perf_event_output(ctx, &events, BPF_F_CURRENT_CPU, &data, 100);
     return 0;
 }
