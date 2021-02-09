@@ -1,9 +1,7 @@
 # libbpfgo-beginners
-Basic eBPF examples in Golang using [libbpfgo](https://github.com/aquasecurity/tracee/tree/main/libbpfgo), based on the [original Python examples](https://github.com/lizrice/ebpf-beginners) from my [Beginner's Guide to eBPF talk](https://speakerdeck.com/lizrice/liz-rice-beginners-guide-to-ebpf)  
-
-WORK IN PROGRESS! 
-
-eBPF hello world examples using libbpfgo
+Basic eBPF examples in Golang using [libbpfgo](https://github.com/aquasecurity/tracee/tree/main/libbpfgo). 
+* Accompanying [slides from my talk at GOTOpia 2021](https://speakerdeck.com/lizrice/beginners-guide-to-ebpf-programming-with-go) called Beginner's Guide to eBPF Programming in Go
+* See also my [original Python examples](https://github.com/lizrice/ebpf-beginners) from my [Beginner's Guide to eBPF talk](https://speakerdeck.com/lizrice/liz-rice-beginners-guide-to-ebpf)  
 
 ## Install Go 
 
@@ -27,7 +25,7 @@ This builds two things:
 * dist/hello.bpf.o - an object file for the eBPF program
 * hello - a Go executable
 
-The executable reads in the object file at runtime.
+The Go executable reads in the object file at runtime. Take a look at the .o file with readelf if you want to see the sections defined in it.
 
 ## Notes 
 
