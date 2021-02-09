@@ -34,33 +34,25 @@ func main() {
 	_, err = prog.AttachRawTracepoint("sys_enter")
 	must(err)
 
-	eventsChannel := make(chan []byte, 1024)
-	p, err := bpfModule.InitPerfBuf("events", eventsChannel, nil, 1024)
+	e := make(chan []byte, 300)
+	p, err := bpfModule.InitPerfBuf("events", e, nil, 1024)
 	must(err)
 
 	p.Start()
 
 	counter := make(map[string]int, 350)
-
 	go func() {
-		for {
-			select {
-			case event := <-eventsChannel:
-				// val := binary.LittleEndian.Uint64(event)
-				// fmt.Printf("Event %s\n", string(event))
-				comm := string(event)
-				if _, ok := counter[comm]; ok {
-					counter[comm]++
-				} else {
-					counter[comm] = 1
-				}
-			}
+		for data := range e {
+			comm := string(data)
+			counter[comm]++
 		}
 	}()
 
 	<-sig
 	p.Stop()
-	fmt.Printf("%v\n", counter)
+	for comm, n := range counter {
+		fmt.Printf("%s: %d\n", comm, n)
+	}
 }
 
 func must(err error) {
