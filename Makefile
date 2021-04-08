@@ -1,3 +1,5 @@
+ARCH=$(shell uname -m)
+
 TARGET := hello
 TARGET_BPF := $(TARGET).bpf.o
 
@@ -5,7 +7,7 @@ GO_SRC := *.go
 BPF_SRC := *.bpf.c
 
 LIBBPF_HEADERS := /usr/include/bpf
-LIBBPF_OBJ := /usr/lib/x86_64-linux-gnu/libbpf.a
+LIBBPF_OBJ := /usr/lib/$(ARCH)-linux-gnu/libbpf.a
 
 .PHONY: all
 all: $(TARGET) $(TARGET_BPF)
@@ -16,7 +18,7 @@ $(TARGET): $(GO_SRC)
 
 $(TARGET_BPF): $(BPF_SRC)
 	clang \
-		-I /usr/include/x86_64-linux-gnu \
+		-I /usr/include/$(ARCH)-linux-gnu \
 		-O2 -c -target bpf \
 		-o $@ $<
 

@@ -24,7 +24,7 @@ func main() {
 
 	prog, err := bpfModule.GetProgram("hello")
 	must(err)
-	_, err = prog.AttachKprobe("__x64_sys_execve")
+	_, err = prog.AttachKprobe(sys_execve)
 	must(err)
 
 	go bpf.TracePrint()
