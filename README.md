@@ -31,4 +31,4 @@ The Go executable reads in the object file at runtime. Take a look at the .o fil
 
 I'm using Ubuntu 20.10, kernel 5.8, go 1.15
 
-This approach installs the libbpf-dev package. Another alternative (which is what [Tracee](https://github.com/aquasecurity/tracee) does) is to install the libbpf source as a git submodule, and build it from source. 
+This approach installs the libbpf-dev package. Another alternative (which is what [Tracee](https://github.com/aquasecurity/tracee) does) is to install the [libbpf source](https://github.com/libbpf/libbpf) as a git submodule, build it from source and install it to the expected location (e.g. `/usr/lib/x86_64-linux-gnu/libbpf.a` on an Intel x86 processor).
