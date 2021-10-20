@@ -27,6 +27,22 @@ This builds two things:
 
 The Go executable reads in the object file at runtime. Take a look at the .o file with readelf if you want to see the sections defined in it.
 
+## Docker
+
+To avoid compatibility issues, you can use the `Dockerfile` provided in this repository.
+
+Build it by your own:
+
+```bash
+docker build -t hello .
+```
+
+And the run it from the project directory to compile the program:
+
+```bash
+docker run --rm -v $(pwd)/:/app/:z hello
+```
+
 ## Notes 
 
 I'm using Ubuntu 20.10, kernel 5.8, go 1.15
