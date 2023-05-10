@@ -13,4 +13,5 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # Execute build command.
-ENTRYPOINT ["/usr/bin/make", "all"]
+ENTRYPOINT ["/usr/bin/make"]
+CMD ["all"]
