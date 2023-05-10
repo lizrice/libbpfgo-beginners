@@ -14,7 +14,7 @@ all: $(TARGET) $(TARGET_BPF)
 
 go_env := CC=clang CGO_CFLAGS="-I $(LIBBPF_HEADERS)" CGO_LDFLAGS="$(LIBBPF_OBJ)"
 $(TARGET): $(GO_SRC)
-	$(go_env) go build -o $(TARGET) 
+	$(go_env) go build -o $(TARGET) -buildvcs=false
 
 $(TARGET_BPF): $(BPF_SRC)
 	clang \
@@ -25,4 +25,3 @@ $(TARGET_BPF): $(BPF_SRC)
 .PHONY: clean
 clean:
 	go clean
-	
