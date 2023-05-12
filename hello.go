@@ -3,8 +3,8 @@ package main
 import (
 	"C"
 
-	bpf "github.com/aquasecurity/tracee/libbpfgo"
-	"github.com/aquasecurity/tracee/libbpfgo/helpers"
+	bpf "github.com/aquasecurity/libbpfgo"
+	"github.com/aquasecurity/libbpfgo/helpers"
 )
 import (
 	"fmt"
