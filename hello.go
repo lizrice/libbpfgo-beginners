@@ -3,7 +3,8 @@ package main
 import (
 	"C"
 
-	bpf "github.com/aquasecurity/tracee/libbpfgo"
+	bpf "github.com/aquasecurity/libbpfgo"
+	"github.com/aquasecurity/libbpfgo/helpers"
 )
 import (
 	"fmt"
@@ -27,7 +28,7 @@ func main() {
 	_, err = prog.AttachKprobe(sys_execve)
 	must(err)
 
-	go bpf.TracePrint()
+	go helpers.TracePipeListen()
 
 	prog, err = bpfModule.GetProgram("hello_bpftrace")
 	must(err)
