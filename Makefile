@@ -3,8 +3,8 @@ ARCH=$(shell uname -m)
 TARGET := hello
 TARGET_BPF := $(TARGET).bpf.o
 
-GO_SRC := *.go
-BPF_SRC := *.bpf.c
+GO_SRC := *.go Makefile
+BPF_SRC := *.bpf.c *.bpf.h Makefile
 
 LIBBPF_HEADERS := /usr/include/bpf
 LIBBPF_OBJ := /usr/lib/$(ARCH)-linux-gnu/libbpf.a
